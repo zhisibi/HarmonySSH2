@@ -1,5 +1,11 @@
 {
   "src": [
+    "pages/Login",
+    "pages/Home",
+    "pages/ServerForm",
+    "pages/Terminal",
+    "pages/Sftp",
+    "pages/Settings",
     "pages/Index"
   ]
 }
