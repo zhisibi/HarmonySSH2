@@ -322,11 +322,11 @@ struct Sftp {
           
           Button('取消')
             .width('100%')
-              .height(44)
-              .margin({ bottom: 8 })
-              .backgroundColor('#6b7280')
-              .fontColor('#fff')
-              .fontSize(14)
+            .height(44)
+            .margin({ bottom: 8 })
+            .backgroundColor('#6b7280')
+            .fontColor('#fff')
+            .fontSize(14)
             .margin({ top: 8 })
             .onClick(() => this.showActions = false)
         }
@@ -340,10 +340,10 @@ struct Sftp {
       .backgroundColor('rgba(0,0,0,0.3)')
       .position({ left: 0, top: 0 })
     }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#f5f7fb')
   }
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
 
   downloadFile() {
     if (!this.server.id || !this.selectedFile) return;
