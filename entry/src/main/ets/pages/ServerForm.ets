@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { ApiService, Server } from '../services/ApiService';
+import { VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component

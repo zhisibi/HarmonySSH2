@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { ApiService, Server } from '../services/ApiService';
+import { VerticalAlign, Alignment } from '@ohos.arkui.node';
 
 // 简单的终端缓冲区
 class TerminalBuffer {

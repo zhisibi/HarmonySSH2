@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { ApiService } from '../services/ApiService';
+import { FlexAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component

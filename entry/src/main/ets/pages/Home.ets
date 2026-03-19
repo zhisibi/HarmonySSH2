@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { ApiService, Server } from '../services/ApiService';
+import { FlexAlign, VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component
@@ -182,19 +183,23 @@ struct Home {
       // 操作按钮
       Row({ space: 8 }) {
         Button('SSH')
-          .cardBtn('#111827')
+          .cardBtn()
+          .backgroundColor('#111827')
           .onClick(() => this.goToTerminal(server))
         
         Button('SFTP')
-          .cardBtn('#4f46e5')
+          .cardBtn()
+          .backgroundColor('#4f46e5')
           .onClick(() => this.goToSftp(server))
         
         Button('编辑')
-          .cardBtn('#f59e0b')
+          .cardBtn()
+          .backgroundColor('#f59e0b')
           .onClick(() => this.goToEditServer(server))
         
         Button('删除')
-          .cardBtn('#dc2626')
+          .cardBtn()
+          .backgroundColor('#dc2626')
           .onClick(() => this.deleteServer(server))
       }
     }
@@ -247,7 +252,7 @@ function menuItem() {
 
 @Styles
 function content() {
-  .flex(1)
+  .layoutWeight(1)
   .padding(24)
 }
 
@@ -276,8 +281,7 @@ function card() {
 }
 
 @Styles
-function cardBtn(color: string) {
-  .backgroundColor(color)
+function cardBtn() {
   .fontColor('#fff')
   .fontSize(14)
   .padding({ left: 14, right: 14 })

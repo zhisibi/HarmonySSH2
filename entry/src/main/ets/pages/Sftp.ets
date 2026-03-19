@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import { ApiService, Server, SftpFile } from '../services/ApiService';
+import { FlexAlign, VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component
