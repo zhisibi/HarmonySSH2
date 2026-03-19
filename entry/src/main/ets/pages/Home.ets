@@ -66,39 +66,65 @@ struct Home {
         
         Row({ space: 8 }) {
           Button('设置')
-            .headerBtn()
+            .backgroundColor('#374151')
+            .fontColor('#fff')
+            .fontSize(13)
+            .padding({ left: 12, right: 12 })
+            .height(34)
             .onClick(() => this.showSettings = !this.showSettings)
           Button('退出登录')
-            .headerBtn()
+            .backgroundColor('#374151')
+            .fontColor('#fff')
+            .fontSize(13)
+            .padding({ left: 12, right: 12 })
+            .height(34)
             .onClick(() => this.logout())
         }
       }
-      .header()
+      .width('100%')
+      .height(60)
+      .backgroundColor('#111827')
+      .padding({ left: 24, right: 24 })
+      .justifyContent(FlexAlign.SpaceBetween)
+      .alignItems(VerticalAlign.Center)
 
       // 设置下拉菜单
       if (this.showSettings) {
         Column() {
           Text('数据备份')
-            .menuItem()
+            .width('100%')
+            .padding({ left: 14, right: 14, top: 10, bottom: 10 })
+            .fontSize(13)
+            .fontColor('#111827')
             .onClick(() => {
               this.showSettings = false;
               router.pushUrl({ url: 'pages/Settings', params: { action: 'backup' } });
             })
           Text('数据恢复')
-            .menuItem()
+            .width('100%')
+            .padding({ left: 14, right: 14, top: 10, bottom: 10 })
+            .fontSize(13)
+            .fontColor('#111827')
             .onClick(() => {
               this.showSettings = false;
               router.pushUrl({ url: 'pages/Settings', params: { action: 'restore' } });
             })
           Text('修改密码')
-            .menuItem()
+            .width('100%')
+            .padding({ left: 14, right: 14, top: 10, bottom: 10 })
+            .fontSize(13)
+            .fontColor('#111827')
             .fontColor('#b91c1c')
             .onClick(() => {
               this.showSettings = false;
               router.pushUrl({ url: 'pages/Settings', params: { action: 'password' } });
             })
         }
-        .settingsMenu()
+        .position({ x: '55%', y: 70 })
+        .width(150)
+        .backgroundColor('#fff')
+        .border({ width: 1, color: '#e5e7eb', radius: 8 })
+        .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetX: 0, offsetY: 5 })
       }
 
       // 内容区域
@@ -113,10 +139,15 @@ struct Home {
           Blank()
           
           Button('添加服务器')
-            .addBtn()
+            .backgroundColor('#10b981')
+            .fontColor('#fff')
+            .fontSize(14)
+            .padding({ left: 14, right: 14 })
+            .height(36)
             .onClick(() => this.goToAddServer())
         }
-        .sectionHeader()
+        .width('100%')
+        .margin({ bottom: 8 })
 
         // 加载中
         if (this.isLoading) {
@@ -155,9 +186,12 @@ struct Home {
           .layoutWeight(1)
         }
       }
-      .content()
+      .layoutWeight(1)
+  .padding(24)
     }
-    .page()
+    .width('100%')
+  .height('100%')
+  .backgroundColor('#f5f7fb')
   }
 
   @Builder
@@ -183,93 +217,58 @@ struct Home {
       // 操作按钮
       Row({ space: 8 }) {
         Button('SSH')
-          .cardBtn()
+          .fontColor('#fff')
+          .fontSize(14)
+          .padding({ left: 14, right: 14 })
+          .height(40)
+          .borderRadius(10)
           .backgroundColor('#111827')
           .onClick(() => this.goToTerminal(server))
         
         Button('SFTP')
-          .cardBtn()
+          .fontColor('#fff')
+          .fontSize(14)
+          .padding({ left: 14, right: 14 })
+          .height(40)
+          .borderRadius(10)
           .backgroundColor('#4f46e5')
           .onClick(() => this.goToSftp(server))
         
         Button('编辑')
-          .cardBtn()
+          .fontColor('#fff')
+          .fontSize(14)
+          .padding({ left: 14, right: 14 })
+          .height(40)
+          .borderRadius(10)
           .backgroundColor('#f59e0b')
           .onClick(() => this.goToEditServer(server))
         
         Button('删除')
-          .cardBtn()
+          .fontColor('#fff')
+          .fontSize(14)
+          .padding({ left: 14, right: 14 })
+          .height(40)
+          .borderRadius(10)
           .backgroundColor('#dc2626')
           .onClick(() => this.deleteServer(server))
       }
     }
-    .card()
+    .width('100%')
+    .backgroundColor('#fff')
+    .border({ width: 1, color: '#e5e7eb', radius: 14 })
+    .padding(16)
+    .shadow({ radius: 18, color: 'rgba(0,0,0,0.04)', offsetX: 0, offsetY: 4 })
   }
 }
 
-function page() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
-}
 
-function header() {
-  .width('100%')
-  .height(60)
-  .backgroundColor('#111827')
-  .padding({ left: 24, right: 24 })
-  .justifyContent(FlexAlign.SpaceBetween)
-  .alignItems(VerticalAlign.Center)
-}
 
-function headerBtn() {
-  .backgroundColor('#374151')
-  .fontColor('#fff')
-  .fontSize(13)
-  .padding({ left: 12, right: 12 })
-  .height(34)
-}
 
-function settingsMenu() {
-  .position({ x: '55%', y: 70 })
-  .width(150)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#e5e7eb', radius: 8 })
-  .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetX: 0, offsetY: 5 })
-}
 
-function menuItem() {
-  .width('100%')
-  .padding({ left: 14, right: 14, top: 10, bottom: 10 })
-  .fontSize(13)
-  .fontColor('#111827')
-}
 
-function content() {
-  .layoutWeight(1)
-  .padding(24)
-}
 
-function sectionHeader() {
-  .width('100%')
-  .margin({ bottom: 8 })
-}
 
-function addBtn() {
-  .backgroundColor('#10b981')
-  .fontColor('#fff')
-  .fontSize(14)
-  .padding({ left: 14, right: 14 })
-  .height(36)
-}
 
-function card() {
-  .width('100%')
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#e5e7eb', radius: 14 })
-  .padding(16)
-  .shadow({ radius: 18, color: 'rgba(0,0,0,0.04)', offsetX: 0, offsetY: 4 })
-}
 
 function cardBtn() {
   .fontColor('#fff')

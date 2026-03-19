@@ -54,7 +54,11 @@ struct Login {
             .fontColor('#555')
             .fontWeight(FontWeight.Medium)
           TextInput({ placeholder: '请输入后端地址', text: this.baseUrl })
-            .loginInput()
+            .height(48)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#ddd', radius: 5 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(14)
             .onChange((value) => {
               this.baseUrl = value;
               this.errorMsg = '';
@@ -70,7 +74,11 @@ struct Login {
             .fontColor('#555')
             .fontWeight(FontWeight.Medium)
           TextInput({ placeholder: '请输入用户名', text: this.username })
-            .loginInput()
+            .height(48)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#ddd', radius: 5 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(14)
             .onChange((value) => {
               this.username = value;
               this.errorMsg = '';
@@ -86,7 +94,11 @@ struct Login {
             .fontColor('#555')
             .fontWeight(FontWeight.Medium)
           TextInput({ placeholder: '请输入密码', text: this.password })
-            .loginInput()
+            .height(48)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#ddd', radius: 5 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(14)
             .type(InputType.Password)
             .onChange((value) => {
               this.password = value;
@@ -98,7 +110,11 @@ struct Login {
 
         // 登录按钮
         Button('登录', { type: ButtonType.Capsule })
-          .loginBtn()
+          .width('100%')
+          .height(48)
+          .backgroundColor('#667eea')
+          .fontSize(16)
+          .fontWeight(FontWeight.Medium)
           .enabled(!this.isLoading)
           .onClick(() => this.doLogin())
 
@@ -118,33 +134,20 @@ struct Login {
             .margin({ top: 20 })
         }
       }
-      .loginCard()
+      .width(300)
+      .padding(32)
+      .backgroundColor('#fff')
+      .borderRadius(10)
+      .shadow({ radius: 25, color: 'rgba(0,0,0,0.1)', offsetX: 0, offsetY: 10 })
     }
-    .loginBg()
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#667eea')
   }
 }
 
-function loginBg() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#667eea')
-}
 
-function loginCard() {
-  .width(300)
-  .padding(32)
-  .backgroundColor('#fff')
-  .borderRadius(10)
-  .shadow({ radius: 25, color: 'rgba(0,0,0,0.1)', offsetX: 0, offsetY: 10 })
-}
 
-function loginInput() {
-  .height(48)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#ddd', radius: 5 })
-  .padding({ left: 12, right: 12 })
-  .fontSize(14)
-}
 
 function loginBtn() {
   .width('100%')

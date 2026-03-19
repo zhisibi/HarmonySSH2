@@ -64,7 +64,9 @@ struct ServerForm {
       // 顶部导航
       Row() {
         Button('返回')
-          .backBtnStyle()
+          .backgroundColor('transparent')
+          .fontColor('#fff')
+          .fontSize(16)
           .onClick(() => router.back())
         
         Text(this.isEditing ? '编辑服务器' : '添加服务器')
@@ -74,33 +76,53 @@ struct ServerForm {
         
         Blank()
       }
-      .navStyle()
+      .width('100%')
+      .height(60)
+      .backgroundColor('#111827')
+      .padding({ left: 16, right: 24 })
+      .alignItems(VerticalAlign.Center)
 
       Scroll() {
         Column({ space: 16 }) {
           // 服务器名称
           this.FormItem('服务器名称', '必填')
           TextInput({ placeholder: '请输入服务器名称', text: this.server.name })
-            .formInput()
+            .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
             .onChange((v) => this.server.name = v)
 
           // 主机地址
           this.FormItem('主机地址', '必填')
           TextInput({ placeholder: '如 192.168.1.100 或 example.com', text: this.server.host })
-            .formInput()
+            .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
             .onChange((v) => this.server.host = v)
 
           // 端口
           this.FormItem('端口', '默认 22')
           TextInput({ placeholder: '22', text: this.server.port?.toString() || '22' })
-            .formInput()
+            .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
             .type(InputType.Number)
             .onChange((v) => this.server.port = parseInt(v) || 22)
 
           // 用户名
           this.FormItem('用户名', '必填')
           TextInput({ placeholder: '请输入用户名', text: this.server.username })
-            .formInput()
+            .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
             .onChange((v) => this.server.username = v)
 
           // 认证方式
@@ -122,7 +144,11 @@ struct ServerForm {
           if (this.server.authType === 'password') {
             this.FormItem('密码')
             TextInput({ placeholder: '请输入密码', text: this.server.password })
-              .formInput()
+              .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
               .type(InputType.Password)
               .onChange((v) => this.server.password = v)
           }
@@ -131,12 +157,20 @@ struct ServerForm {
           if (this.server.authType === 'key') {
             this.FormItem('私钥', 'PEM 格式')
             TextArea({ placeholder: '粘贴私钥内容', text: this.server.privateKey })
-              .formTextArea()
+              .height(120)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding(12)
+            .fontSize(14)
               .onChange((v) => this.server.privateKey = v)
 
             this.FormItem('密钥密码', '可选')
             TextInput({ placeholder: '如有 passphrase 请填写', text: this.server.passphrase })
-              .formInput()
+              .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
               .type(InputType.Password)
               .onChange((v) => this.server.passphrase = v)
           }
@@ -144,7 +178,11 @@ struct ServerForm {
           // 标签
           this.FormItem('标签', '逗号分隔')
           TextInput({ placeholder: '如: 生产, 北京, Web', text: this.server.tags })
-            .formInput()
+            .height(50)
+            .backgroundColor('#fff')
+            .border({ width: 1, color: '#d1d5db', radius: 10 })
+            .padding({ left: 12, right: 12 })
+            .fontSize(16)
             .onChange((v) => this.server.tags = v)
 
           // 错误提示
@@ -157,7 +195,11 @@ struct ServerForm {
 
           // 保存按钮
           Button(this.isEditing ? '保存修改' : '添加服务器', { type: ButtonType.Capsule })
-            .saveBtnStyle()
+            .width('100%')
+            .height(50)
+            .backgroundColor('#10b981')
+            .fontSize(18)
+            .fontColor('#fff')
             .enabled(!this.isLoading)
             .margin({ top: 20, bottom: 40 })
             .onClick(() => this.saveServer())
@@ -165,7 +207,9 @@ struct ServerForm {
         .padding(20)
       }
     }
-    .pageStyle()
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#f5f7fb')
   }
 
   @Builder
@@ -186,47 +230,3 @@ struct ServerForm {
   }
 }
 
-// 样式
-function pageStyle() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
-}
-
-function navStyle() {
-  .width('100%')
-  .height(60)
-  .backgroundColor('#111827')
-  .padding({ left: 16, right: 24 })
-  .alignItems(VerticalAlign.Center)
-}
-
-function backBtnStyle() {
-  .backgroundColor('transparent')
-  .fontColor('#fff')
-  .fontSize(16)
-}
-
-function formInput() {
-  .height(50)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#d1d5db', radius: 10 })
-  .padding({ left: 12, right: 12 })
-  .fontSize(16)
-}
-
-function formTextArea() {
-  .height(120)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#d1d5db', radius: 10 })
-  .padding(12)
-  .fontSize(14)
-}
-
-function saveBtnStyle() {
-  .width('100%')
-  .height(50)
-  .backgroundColor('#10b981')
-  .fontSize(18)
-  .fontColor('#fff')
-}

@@ -190,7 +190,9 @@ struct Terminal {
       // 顶部导航
       Row({ space: 12 }) {
         Button('返回')
-          .backBtnStyle()
+          .backgroundColor('transparent')
+          .fontColor('#fff')
+          .fontSize(16)
           .onClick(() => router.back())
 
         Column({ space: 2 }) {
@@ -221,10 +223,18 @@ struct Terminal {
         }
 
         Button('断开')
-          .actionBtnStyle('#dc2626')
+          .backgroundColor('#dc2626')
+          .fontColor('#fff')
+          .fontSize(12)
+          .padding({ left: 10, right: 10 })
+          .height(32)
           .onClick(() => this.disconnect())
       }
-      .navStyle()
+      .width('100%')
+      .height(60)
+      .backgroundColor('#111827')
+      .padding({ left: 16, right: 16 })
+      .alignItems(VerticalAlign.Center)
 
       // 终端显示区域
       Scroll() {
@@ -235,7 +245,8 @@ struct Terminal {
           .width('100%')
           .padding(12)
       }
-      .terminalOutputStyle()
+      .layoutWeight(1)
+      .backgroundColor('#0c0c0c')
       .scrollable(ScrollDirection.Vertical)
       .align(Alignment.TopStart)
 
@@ -247,106 +258,63 @@ struct Terminal {
           .fontColor('#33ff33')
         
         TextInput({ placeholder: '输入命令...', text: this.inputCommand })
-          .inputStyle()
+          .height(44)
+          .backgroundColor('#1a1a1a')
+          .border({ width: 1, color: '#333', radius: 8 })
+          .padding({ left: 10, right: 10 })
+          .fontSize(14)
+          .fontColor('#33ff33')
           .onChange((v) => this.inputCommand = v)
           .onSubmit(() => this.sendCommand())
 
         Button('发送')
-          .sendBtnStyle()
+          .backgroundColor('#10b981')
+          .fontColor('#fff')
+          .fontSize(14)
+          .padding({ left: 16, right: 16 })
+          .height(44)
           .enabled(this.isConnected)
           .onClick(() => this.sendCommand())
       }
-      .inputAreaStyle()
+      .width('100%')
+      .padding(12)
+      .backgroundColor('#111827')
 
       // 快捷操作栏
       Row({ space: 8 }) {
         Button('清屏')
-          .shortcutBtnStyle()
+          .backgroundColor('#374151')
+          .fontColor('#fff')
+          .fontSize(12)
+          .padding({ left: 12, right: 12 })
+          .height(32)
           .onClick(() => this.clearTerminal())
         Button('重连')
-          .shortcutBtnStyle()
+          .backgroundColor('#374151')
+          .fontColor('#fff')
+          .fontSize(12)
+          .padding({ left: 12, right: 12 })
+          .height(32)
           .onClick(() => this.connect())
         Button('Ctrl+C')
-          .shortcutBtnStyle()
+          .backgroundColor('#374151')
+          .fontColor('#fff')
+          .fontSize(12)
+          .padding({ left: 12, right: 12 })
+          .height(32)
           .onClick(() => {
             this.inputCommand = '\x03';
             this.sendCommand();
           })
       }
-      .shortcutBarStyle()
+      .width('100%')
+      .padding(8)
+      .backgroundColor('#111827')
+      .justifyContent(FlexAlign.SpaceEvenly)
     }
-    .pageStyle()
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#0c0c0c')
   }
 }
 
-// 样式
-function pageStyle() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#0c0c0c')
-}
-
-function navStyle() {
-  .width('100%')
-  .height(60)
-  .backgroundColor('#111827')
-  .padding({ left: 16, right: 16 })
-  .alignItems(VerticalAlign.Center)
-}
-
-function backBtnStyle() {
-  .backgroundColor('transparent')
-  .fontColor('#fff')
-  .fontSize(16)
-}
-
-function actionBtnStyle(color: string) {
-  .backgroundColor(color)
-  .fontColor('#fff')
-  .fontSize(12)
-  .padding({ left: 10, right: 10 })
-  .height(32)
-}
-
-function terminalOutputStyle() {
-  .layoutWeight(1)
-  .backgroundColor('#0c0c0c')
-}
-
-function inputStyle() {
-  .height(44)
-  .backgroundColor('#1a1a1a')
-  .border({ width: 1, color: '#333', radius: 8 })
-  .padding({ left: 10, right: 10 })
-  .fontSize(14)
-  .fontColor('#33ff33')
-}
-
-function inputAreaStyle() {
-  .width('100%')
-  .padding(12)
-  .backgroundColor('#111827')
-}
-
-function sendBtnStyle() {
-  .backgroundColor('#10b981')
-  .fontColor('#fff')
-  .fontSize(14)
-  .padding({ left: 16, right: 16 })
-  .height(44)
-}
-
-function shortcutBarStyle() {
-  .width('100%')
-  .padding(8)
-  .backgroundColor('#111827')
-  .justifyContent(FlexAlign.SpaceEvenly)
-}
-
-function shortcutBtnStyle() {
-  .backgroundColor('#374151')
-  .fontColor('#fff')
-  .fontSize(12)
-  .padding({ left: 12, right: 12 })
-  .height(32)
-}

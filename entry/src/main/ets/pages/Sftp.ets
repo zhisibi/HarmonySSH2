@@ -143,7 +143,9 @@ struct Sftp {
       // 顶部导航
       Row({ space: 12 }) {
         Button('返回')
-          .backBtnStyle()
+          .backgroundColor('transparent')
+          .fontColor('#fff')
+          .fontSize(16)
           .onClick(() => router.back())
 
         Column({ space: 2 }) {
@@ -160,10 +162,18 @@ struct Sftp {
         Blank()
 
         Button('上级')
-          .actionBtnStyle('#f59e0b')
+          .backgroundColor('#f59e0b')
+          .fontColor('#fff')
+          .fontSize(12)
+          .padding({ left: 10, right: 10 })
+          .height(32)
           .onClick(() => this.goUp())
       }
-      .navStyle()
+      .width('100%')
+      .height(60)
+      .backgroundColor('#111827')
+      .padding({ left: 16, right: 16 })
+      .alignItems(VerticalAlign.Center)
 
       // 面包屑导航
       Scroll() {
@@ -184,19 +194,32 @@ struct Sftp {
           })
         }
       }
-      .breadcrumbStyle()
+      .width('100%')
+      .padding(12)
+      .backgroundColor('#fff')
+      .border({ width: 1, color: '#e5e7eb' })
 
       // 工具栏
       Row({ space: 8 }) {
         Button('新建文件夹')
-          .toolBtnStyle()
+          .backgroundColor('#e5e7eb')
+          .fontColor('#374151')
+          .fontSize(12)
+          .padding({ left: 12, right: 12 })
+          .height(32)
           .onClick(() => this.createFolder())
         
         Button('刷新')
-          .toolBtnStyle()
+          .backgroundColor('#e5e7eb')
+          .fontColor('#374151')
+          .fontSize(12)
+          .padding({ left: 12, right: 12 })
+          .height(32)
           .onClick(() => this.loadFiles())
       }
-      .toolbarStyle()
+      .width('100%')
+      .padding(12)
+      .backgroundColor('#fff')
 
       // 文件列表
       if (this.isLoading) {
@@ -240,7 +263,9 @@ struct Sftp {
                   .fontSize(12)
                   .fontColor('#9ca3af')
               }
-              .fileItemStyle()
+              .width('100%')
+              .padding(12)
+              .border({ width: 1, color: '#f3f4f6', radius: 0 })
               .onClick(() => this.enterDirectory(file))
               .onLongPress(() => {
                 this.selectedFile = file;
@@ -249,11 +274,14 @@ struct Sftp {
             }
           })
         }
-        .listStyle()
+        .width('100%')
+        .backgroundColor('#fff')
         .layoutWeight(1)
       }
     }
-    .pageStyle()
+    .width('100%')
+  .height('100%')
+  .backgroundColor('#f5f7fb')
 
     // 操作菜单
     if (this.showActions && this.selectedFile) {
@@ -269,26 +297,52 @@ struct Sftp {
           
           if (!this.selectedFile.isDirectory) {
             Button('下载')
-              .menuBtnStyle()
+              .width('100%')
+              .height(44)
+              .margin({ bottom: 8 })
+              .backgroundColor('#667eea')
+              .fontColor('#fff')
+              .fontSize(14)
               .onClick(() => this.downloadFile())
           }
           
           Button('重命名')
-            .menuBtnStyle()
+            .width('100%')
+              .height(44)
+              .margin({ bottom: 8 })
+              .backgroundColor('#667eea')
+              .fontColor('#fff')
+              .fontSize(14)
             .onClick(() => this.renameFile(this.selectedFile!))
           
           Button('删除', { type: ButtonType.Capsule })
-            .menuBtnStyle('#dc2626')
+            .width('100%')
+              .height(44)
+              .margin({ bottom: 8 })
+              .backgroundColor('#dc2626')
+              .fontColor('#fff')
+              .fontSize(14)
             .onClick(() => this.deleteFile(this.selectedFile!))
           
           Button('取消')
-            .menuBtnStyle('#6b7280')
+            .width('100%')
+              .height(44)
+              .margin({ bottom: 8 })
+              .backgroundColor('#6b7280')
+              .fontColor('#fff')
+              .fontSize(14)
             .margin({ top: 8 })
             .onClick(() => this.showActions = false)
         }
-        .menuStyle()
+        .width('100%')
+        .padding(20)
+        .backgroundColor('#fff')
+        .border({ width: 1, color: '#e5e7eb', radius: 16 })
       }
-      .coversStyle()
+      .width('100%')
+  .height('100%')
+  .backgroundColor('rgba(0,0,0,0.3)')
+  .position({ left: 0, top: 0 })
     }
   }
 
@@ -301,86 +355,3 @@ struct Sftp {
   }
 }
 
-// 样式
-function pageStyle() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
-}
-
-function navStyle() {
-  .width('100%')
-  .height(60)
-  .backgroundColor('#111827')
-  .padding({ left: 16, right: 16 })
-  .alignItems(VerticalAlign.Center)
-}
-
-function backBtnStyle() {
-  .backgroundColor('transparent')
-  .fontColor('#fff')
-  .fontSize(16)
-}
-
-function actionBtnStyle(color: string) {
-  .backgroundColor(color)
-  .fontColor('#fff')
-  .fontSize(12)
-  .padding({ left: 10, right: 10 })
-  .height(32)
-}
-
-function breadcrumbStyle() {
-  .width('100%')
-  .padding(12)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#e5e7eb' })
-}
-
-function toolbarStyle() {
-  .width('100%')
-  .padding(12)
-  .backgroundColor('#fff')
-}
-
-function toolBtnStyle() {
-  .backgroundColor('#e5e7eb')
-  .fontColor('#374151')
-  .fontSize(12)
-  .padding({ left: 12, right: 12 })
-  .height(32)
-}
-
-function listStyle() {
-  .width('100%')
-  .backgroundColor('#fff')
-}
-
-function fileItemStyle() {
-  .width('100%')
-  .padding(12)
-  .border({ width: 1, color: '#f3f4f6', radius: 0 })
-}
-
-function coversStyle() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('rgba(0,0,0,0.3)')
-  .position({ left: 0, top: 0 })
-}
-
-function menuStyle() {
-  .width('100%')
-  .padding(20)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#e5e7eb', radius: 16 })
-}
-
-function menuBtnStyle(color?: string) {
-  .width('100%')
-  .height(44)
-  .margin({ bottom: 8 })
-  .backgroundColor(color || '#667eea')
-  .fontColor('#fff')
-  .fontSize(14)
-}

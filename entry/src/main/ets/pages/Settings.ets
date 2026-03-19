@@ -36,7 +36,7 @@ struct Settings {
 
     this.isLoading = true;
     try {
-      const response = await fetch(`${ApiService.getWebSocketUrl().replace('ws://', 'http://').replace('/ssh', '')}/api/admin/password`, {
+      const response = await fetch(`${ApiService.getBaseUrl()}/api/admin/password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +101,9 @@ struct Settings {
       // 顶部导航
       Row({ space: 12 }) {
         Button('返回')
-          .backBtnStyle()
+          .backgroundColor('transparent')
+          .fontColor('#fff')
+          .fontSize(16)
           .onClick(() => router.back())
 
         Text('设置')
@@ -111,7 +113,11 @@ struct Settings {
 
         Blank()
       }
-      .navStyle()
+      .width('100%')
+      .height(60)
+      .backgroundColor('#111827')
+      .padding({ left: 16, right: 16 })
+      .alignItems(VerticalAlign.Center)
 
       Scroll() {
         Column({ space: 20 }) {
@@ -132,7 +138,9 @@ struct Settings {
         .padding(20)
       }
     }
-    .pageStyle()
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#f5f7fb')
 
     // 消息提示
     if (this.showMessage) {
@@ -141,7 +149,11 @@ struct Settings {
           .fontSize(14)
           .fontColor('#fff')
       }
-      .toastStyle()
+      .position({ x: '25%', y: '80%' })
+      .width(200)
+      .padding(12)
+      .backgroundColor('rgba(0,0,0,0.7)')
+      .borderRadius(8)
     }
   }
 
@@ -173,28 +185,51 @@ struct Settings {
         .margin({ bottom: 10 })
 
       Text('当前密码')
-        .labelStyle()
+        .fontSize(13)
+        .fontColor('#374151')
+        .fontWeight(FontWeight.Medium)
       TextInput({ placeholder: '请输入当前密码', text: this.currentPassword })
-        .inputStyle()
+        .height(48)
+        .backgroundColor('#fff')
+        .border({ width: 1, color: '#d1d5db', radius: 10 })
+        .padding({ left: 12, right: 12 })
+        .fontSize(14)
         .type(InputType.Password)
         .onChange((v) => this.currentPassword = v)
 
       Text('新密码')
-        .labelStyle()
+        .fontSize(13)
+        .fontColor('#374151')
+        .fontWeight(FontWeight.Medium)
       TextInput({ placeholder: '请输入新密码', text: this.newPassword })
-        .inputStyle()
+        .height(48)
+        .backgroundColor('#fff')
+        .border({ width: 1, color: '#d1d5db', radius: 10 })
+        .padding({ left: 12, right: 12 })
+        .fontSize(14)
         .type(InputType.Password)
         .onChange((v) => this.newPassword = v)
 
       Text('确认新密码')
-        .labelStyle()
+        .fontSize(13)
+        .fontColor('#374151')
+        .fontWeight(FontWeight.Medium)
       TextInput({ placeholder: '请再次输入新密码', text: this.confirmPassword })
-        .inputStyle()
+        .height(48)
+        .backgroundColor('#fff')
+        .border({ width: 1, color: '#d1d5db', radius: 10 })
+        .padding({ left: 12, right: 12 })
+        .fontSize(14)
         .type(InputType.Password)
         .onChange((v) => this.confirmPassword = v)
 
       Button('确认修改', { type: ButtonType.Capsule })
-        .saveBtnStyle()
+        .width('100%')
+        .height(48)
+        .backgroundColor('#667eea')
+        .fontColor('#fff')
+        .fontSize(16)
+        .borderRadius(12)
         .enabled(!this.isLoading)
         .margin({ top: 20 })
         .onClick(() => this.changePassword())
@@ -214,7 +249,12 @@ struct Settings {
         .fontColor('#6b7280')
 
       Button('开始备份', { type: ButtonType.Capsule })
-        .saveBtnStyle()
+        .width('100%')
+        .height(48)
+        .backgroundColor('#667eea')
+        .fontColor('#fff')
+        .fontSize(16)
+        .borderRadius(12)
         .enabled(!this.isLoading)
         .onClick(() => this.backupData())
     }
@@ -233,7 +273,12 @@ struct Settings {
         .fontColor('#6b7280')
 
       Button('选择备份文件', { type: ButtonType.Capsule })
-        .saveBtnStyle()
+        .width('100%')
+        .height(48)
+        .backgroundColor('#667eea')
+        .fontColor('#fff')
+        .fontSize(16)
+        .borderRadius(12)
         .onClick(() => this.restoreData())
     }
   }
@@ -251,64 +296,11 @@ struct Settings {
         .fontSize(16)
         .fontColor('#9ca3af')
     }
-    .menuItemStyle()
+    .width('100%')
+    .padding(16)
+    .backgroundColor('#fff')
+    .border({ width: 1, color: '#e5e7eb', radius: 12 })
     .onClick(onClick)
   }
 }
 
-// 样式
-function pageStyle() {
-  .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
-}
-
-function navStyle() {
-  .width('100%')
-  .height(60)
-  .backgroundColor('#111827')
-  .padding({ left: 16, right: 24 })
-  .alignItems(VerticalAlign.Center)
-}
-
-function backBtnStyle() {
-  .backgroundColor('transparent')
-  .fontColor('#fff')
-  .fontSize(16)
-}
-
-function menuItemStyle() {
-  .width('100%')
-  .padding(16)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#e5e7eb', radius: 12 })
-}
-
-function labelStyle() {
-  .fontSize(14)
-  .fontColor('#374151')
-  .margin({ bottom: 6 })
-}
-
-function inputStyle() {
-  .height(50)
-  .backgroundColor('#fff')
-  .border({ width: 1, color: '#d1d5db', radius: 10 })
-  .padding({ left: 12, right: 12 })
-  .fontSize(16)
-}
-
-function saveBtnStyle() {
-  .width('100%')
-  .height(50)
-  .backgroundColor('#667eea')
-  .fontSize(16)
-  .fontColor('#fff')
-}
-
-function toastStyle() {
-  .position({ x: 30, bottom: 100 })
-  .padding(12)
-  .backgroundColor('rgba(0,0,0,0.7)')
-  .border({ radius: 8 })
-}
