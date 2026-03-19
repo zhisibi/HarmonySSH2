@@ -2,7 +2,6 @@ import router from '@ohos.router';
 import { MockApiService, Server } from '../services/MockApiService';
 
 type WsLike = { close: () => void } | null;
-import { VerticalAlign, Alignment } from '@ohos.arkui.node';
 
 // 简单的终端缓冲区
 class TerminalBuffer {

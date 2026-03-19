@@ -1,6 +1,5 @@
 import router from '@ohos.router';
 import { MockApiService, Server } from '../services/MockApiService';
-import { FlexAlign, VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component
@@ -270,10 +269,4 @@ struct Home {
 
 
 
-function cardBtn() {
-  .fontColor('#fff')
-  .fontSize(14)
-  .padding({ left: 14, right: 14 })
-  .height(40)
-  .borderRadius(10)
-}
+

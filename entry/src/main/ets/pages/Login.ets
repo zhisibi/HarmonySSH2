@@ -1,6 +1,5 @@
 import router from '@ohos.router';
 import { MockApiService } from '../services/MockApiService';
-import { HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
 @Component
@@ -149,10 +148,4 @@ struct Login {
 
 
 
-function loginBtn() {
-  .width('100%')
-  .height(48)
-  .backgroundColor('#667eea')
-  .fontSize(16)
-  .fontWeight(FontWeight.Medium)
-}
+
