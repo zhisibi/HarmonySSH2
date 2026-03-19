@@ -1,6 +1,5 @@
 // API 服务 - 对接 WebSSH 后端
 
-// 存储
 const TOKEN_KEY = 'webssh_token';
 const BASE_URL_KEY = 'webssh_base_url';
 
@@ -9,46 +8,45 @@ export class ApiService {
   private static baseUrl: string = 'http://192.168.100.20:3000';
   private static wsUrl: string = 'ws://192.168.100.20:3000';
 
-// 存储
-const TOKEN_KEY = 'webssh_token';
-
-export class ApiService {
-  private static token: string = '';
-
-  // 设置 Token
+  // ====== Token ======
   static setToken(token: string): void {
     this.token = token;
   }
 
-  // 获取 Token
   static getToken(): string {
     return this.token;
   }
 
-  // 清除 Token
   static clearToken(): void {
     this.token = '';
   }
 
-  // 设置后端地址
+  // ====== Base URL / WS URL ======
+  /**
+   * 支持用户在登录页动态设置后端地址。
+   * 例：http://192.168.100.20:3000
+   */
   static setBaseUrl(url: string): void {
-    this.baseUrl = url;
-    this.wsUrl = url.replace('http', 'ws');
-    // 保存到本地存储
-    // Preferences.set({ key: BASE_URL_KEY, value: url });
+    const normalized = (url || '').trim().replace(/\/$/, '');
+    if (!normalized) {
+      return;
+    }
+    this.baseUrl = normalized;
+    this.wsUrl = normalized.replace(/^http(s)?:\/\//, (m) => (m.startsWith('https') ? 'wss://' : 'ws://'));
+
+    // TODO: 可接入 Preferences 持久化（后续需要时再做）
+    // Preferences.set({ key: BASE_URL_KEY, value: this.baseUrl });
   }
 
-  // 获取后端地址
   static getBaseUrl(): string {
     return this.baseUrl;
   }
 
-  // 获取 WebSocket 地址
   static getWsUrl(): string {
     return this.wsUrl;
   }
 
-  // 通用请求头
+  // ====== HTTP helpers ======
   private static getHeaders(): Record<string, string> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json'
@@ -59,7 +57,7 @@ export class ApiService {
     return headers;
   }
 
-  // 登录
+  // ====== Auth ======
   static async login(username: string, password: string): Promise<{ success: boolean; token?: string; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/login`, {
@@ -78,7 +76,6 @@ export class ApiService {
     }
   }
 
-  // 登出
   static async logout(): Promise<void> {
     try {
       await fetch(`${this.baseUrl}/api/logout`, {
@@ -91,7 +88,7 @@ export class ApiService {
     this.clearToken();
   }
 
-  // 获取服务器列表
+  // ====== Server CRUD ======
   static async getServers(): Promise<Server[]> {
     try {
       const response = await fetch(`${this.baseUrl}/api/servers`, {
@@ -108,8 +105,7 @@ export class ApiService {
     }
   }
 
-  // 添加服务器
-  static async addServer(server: Server): Promise<{ success: boolean; message?: string }> {
+  static async addServer(server: Server): Promise<{ success: boolean; message?: string; id?: number }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/servers`, {
         method: 'POST',
@@ -123,7 +119,6 @@ export class ApiService {
     }
   }
 
-  // 更新服务器
   static async updateServer(id: number, server: Server): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/servers/${id}`, {
@@ -138,7 +133,6 @@ export class ApiService {
     }
   }
 
-  // 删除服务器
   static async deleteServer(id: number): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/servers/${id}`, {
@@ -152,7 +146,7 @@ export class ApiService {
     }
   }
 
-  // SFTP: 列出目录
+  // ====== SFTP ======
   static async sftpList(serverId: number, path: string): Promise<SftpFile[]> {
     try {
       const response = await fetch(`${this.baseUrl}/api/sftp/list?serverId=${serverId}&path=${encodeURIComponent(path)}`, {
@@ -166,13 +160,11 @@ export class ApiService {
     }
   }
 
-  // SFTP: 下载文件
   static getSftpDownloadUrl(serverId: number, path: string): string {
     return `${this.baseUrl}/api/sftp/download?serverId=${serverId}&path=${encodeURIComponent(path)}`;
   }
 
-  // SFTP: 新建文件夹
-  static async sftpMkdir(serverId: number, path: string, dirname: string): Promise<{ success: boolean }> {
+  static async sftpMkdir(serverId: number, path: string, dirname: string): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/sftp/mkdir`, {
         method: 'POST',
@@ -186,8 +178,7 @@ export class ApiService {
     }
   }
 
-  // SFTP: 删除
-  static async sftpDelete(serverId: number, targetPath: string, type: string): Promise<{ success: boolean }> {
+  static async sftpDelete(serverId: number, targetPath: string, type: 'file' | 'directory'): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/sftp/delete`, {
         method: 'POST',
@@ -201,8 +192,7 @@ export class ApiService {
     }
   }
 
-  // SFTP: 重命名
-  static async sftpRename(serverId: number, oldPath: string, newPath: string): Promise<{ success: boolean }> {
+  static async sftpRename(serverId: number, oldPath: string, newPath: string): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await fetch(`${this.baseUrl}/api/sftp/rename`, {
         method: 'POST',
@@ -216,25 +206,19 @@ export class ApiService {
     }
   }
 
-  // 获取 WebSocket SSH URL
+  // ====== WebSocket ======
   static getWebSocketSshUrl(serverId: number): string {
     const token = this.getToken();
     return `${this.wsUrl}/ws/ssh?serverId=${serverId}&token=${token}`;
   }
 
-  // 获取 WebSocket SFTP URL
   static getWebSocketSftpUrl(serverId: number): string {
     const token = this.getToken();
     return `${this.wsUrl}/ws/sftp?serverId=${serverId}&token=${token}`;
   }
-
-  // 获取 SFTP WebSocket URL
-  static getSftpWebSocketUrl(): string {
-    return `${this.wsUrl}/sftp`;
-  }
 }
 
-// 类型定义
+// ====== 类型定义 ======
 export interface Server {
   id?: number;
   name: string;
@@ -246,6 +230,7 @@ export interface Server {
   privateKey?: string;
   passphrase?: string;
   tags?: string;
+  enabled?: boolean;
 }
 
 export interface SftpFile {
