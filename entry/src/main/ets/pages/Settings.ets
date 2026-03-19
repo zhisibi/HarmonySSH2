@@ -1,5 +1,5 @@
 import router from '@ohos.router';
-import { ApiService } from '../services/ApiService';
+import { MockApiService } from '../services/MockApiService';
 import { FlexAlign } from '@ohos.arkui.node';
 
 @Entry
@@ -16,7 +16,7 @@ struct Settings {
   @State confirmPassword: string = '';
 
   aboutToAppear() {
-    const params = router.getParams() as Record<string, any>;
+    const params = router.getParams() as Record<string, Object | undefined>;
     if (params && params.action) {
       this.action = params.action;
     }
@@ -34,31 +34,12 @@ struct Settings {
       return;
     }
 
+    // Mock 模式：不调用网络接口，直接模拟成功
     this.isLoading = true;
-    try {
-      const response = await fetch(`${ApiService.getBaseUrl()}/api/admin/password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${ApiService.getToken()}`
-        },
-        body: JSON.stringify({
-          currentPassword: this.currentPassword,
-          newPassword: this.newPassword
-        })
-      });
-      const result = await response.json();
-      if (result.success) {
-        this.showMsg('密码修改成功');
-        this.currentPassword = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
-      } else {
-        this.showMsg(result.message || '修改失败');
-      }
-    } catch (e) {
-      this.showMsg('网络错误');
-    }
+    this.showMsg('密码修改成功（Mock）');
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
     this.isLoading = false;
   }
 
@@ -66,7 +47,7 @@ struct Settings {
   async backupData() {
     this.isLoading = true;
     try {
-      const servers = await ApiService.getServers();
+      const servers = await MockApiService.getServers();
       const backupData = {
         version: '1.0',
         timestamp: new Date().toISOString(),
@@ -170,7 +151,7 @@ struct Settings {
         router.pushUrl({ url: 'pages/Settings', params: { action: 'restore' } });
       })
       this.MenuItem('退出登录', '🚪', () => {
-        ApiService.logout();
+        MockApiService.logout();
         router.replaceUrl({ url: 'pages/Login' });
       }, '#dc2626')
     }

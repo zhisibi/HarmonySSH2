@@ -1,5 +1,5 @@
 import router from '@ohos.router';
-import { ApiService } from '../services/ApiService';
+import { MockApiService } from '../services/MockApiService';
 import { HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
@@ -23,9 +23,9 @@ struct Login {
     this.errorMsg = '';
 
     // 设置后端地址
-    ApiService.setBaseUrl(this.baseUrl);
+    MockApiService.setBaseUrl(this.baseUrl);
     
-    const result = await ApiService.login(this.username, this.password);
+    const result = await MockApiService.login(this.username, this.password);
 
     this.isLoading = false;
 

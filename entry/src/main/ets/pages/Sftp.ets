@@ -1,5 +1,5 @@
 import router from '@ohos.router';
-import { ApiService, Server, SftpFile } from '../services/ApiService';
+import { MockApiService, Server, SftpFile } from '../services/MockApiService';
 import { FlexAlign, VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
@@ -15,7 +15,7 @@ struct Sftp {
   @State showActions: boolean = false;
 
   aboutToAppear() {
-    const params = router.getParams() as Record<string, any>;
+    const params = router.getParams() as Record<string, Object | undefined>;
     if (params && params.server) {
       this.server = params.server;
       this.loadFiles();
@@ -26,7 +26,7 @@ struct Sftp {
     if (!this.server.id) return;
     
     this.isLoading = true;
-    this.files = await ApiService.sftpList(this.server.id, this.currentPath);
+    this.files = await MockApiService.sftpList(this.server.id, this.currentPath);
     this.isLoading = false;
   }
 
@@ -83,7 +83,7 @@ struct Sftp {
     if (!this.server.id) return;
     
     const newPath = this.currentPath === '/' ? `/${folderName}` : `${this.currentPath}/${folderName}`;
-    const result = await ApiService.sftpMkdir(this.server.id, newPath);
+    const result = await MockApiService.sftpMkdir(this.server.id, newPath);
     if (result.success) {
       this.loadFiles();
     }
@@ -93,7 +93,7 @@ struct Sftp {
   async deleteFile(file: SftpFile) {
     if (!this.server.id) return;
     
-    const result = await ApiService.sftpDelete(this.server.id, file.name, file.type === 'directory' ? 'directory' : 'file');
+    const result = await MockApiService.sftpDelete(this.server.id, file.name, file.type === 'directory' ? 'directory' : 'file');
     if (result.success) {
       this.showActions = false;
       this.loadFiles();
@@ -347,7 +347,7 @@ struct Sftp {
 
   downloadFile() {
     if (!this.server.id || !this.selectedFile) return;
-    const url = ApiService.getSftpDownloadUrl(this.server.id, this.selectedFile.name);
+    const url = MockApiService.getSftpDownloadUrl(this.server.id, this.selectedFile.name);
     // 鸿蒙下载需要在 Ability 中实现，这里简单提示
     console.log('下载:', url);
     this.showActions = false;

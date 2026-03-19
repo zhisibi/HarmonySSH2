@@ -1,6 +1,5 @@
 import router from '@ohos.router';
-import { ApiService, Server } from '../services/ApiService';
-import { VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
+import { MockApiService, Server } from '../services/MockApiService';
 
 @Entry
 @Component
@@ -26,9 +25,9 @@ struct ServerForm {
   }
 
   aboutToAppear() {
-    const params = router.getParams() as Record<string, any>;
+    const params = router.getParams() as Record<string, Object | undefined>;
     if (params && params.server) {
-      this.server = { ...params.server };
+      this.server = params.server as unknown as Server;
       this.isEditing = true;
     }
   }
@@ -45,9 +44,9 @@ struct ServerForm {
 
     let result;
     if (this.isEditing && this.server.id) {
-      result = await ApiService.updateServer(this.server.id, this.server);
+      result = await MockApiService.updateServer(this.server.id, this.server);
     } else {
-      result = await ApiService.addServer(this.server);
+      result = await MockApiService.addServer(this.server);
     }
 
     this.isLoading = false;

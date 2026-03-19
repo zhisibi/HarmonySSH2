@@ -1,5 +1,7 @@
 import router from '@ohos.router';
-import { ApiService, Server } from '../services/ApiService';
+import { MockApiService, Server } from '../services/MockApiService';
+
+type WsLike = { close: () => void } | null;
 import { VerticalAlign, Alignment } from '@ohos.arkui.node';
 
 // 简单的终端缓冲区
@@ -41,12 +43,12 @@ struct Terminal {
   @State statusText: string = '未连接';
 
   private buffer: TerminalBuffer = new TerminalBuffer();
-  private ws: WebSocket | null = null;
+  private ws: WsLike = null;
   private commandHistory: string[] = [];
   private historyIndex: number = -1;
 
   aboutToAppear() {
-    const params = router.getParams() as Record<string, any>;
+    const params = router.getParams() as Record<string, Object | undefined>;
     if (params && params.server) {
       this.server = params.server;
       this.connect();
@@ -64,66 +66,12 @@ struct Terminal {
     this.statusText = '连接中...';
     this.buffer.addLine(`正在连接 ${this.server.username}@${this.server.host}...`);
 
-    // 构建 WebSocket URL
-    const wsUrl = ApiService.getWebSocketSshUrl(this.server.id!);
-    
-    try {
-      this.ws = new WebSocket(wsUrl);
-      
-      this.ws.onopen = () => {
-        this.isConnected = true;
-        this.isConnecting = false;
-        this.statusText = '已连接';
-        this.buffer.addLine(`已连接到 ${this.server.host}`);
-        this.updateOutput();
-      };
-
-      this.ws.onmessage = (event: MessageEvent) => {
-        // 后端发送的是 base64 编码的数据
-        try {
-          const data = event.data;
-          if (typeof data === 'string') {
-            // 尝试解析 JSON 或直接显示
-            try {
-              const json = JSON.parse(data);
-              if (json.data) {
-                // 解码 base64
-                const decoded = atob(json.data);
-                this.buffer.addText(decoded);
-                this.updateOutput();
-              }
-            } catch {
-              // 直接显示文本
-              this.buffer.addText(data);
-              this.updateOutput();
-            }
-          }
-        } catch (e) {
-          console.error('解析消息失败:', e);
-        }
-      };
-
-      this.ws.onerror = (err) => {
-        console.error('WebSocket 错误:', err);
-        this.buffer.addLine('连接错误');
-        this.isConnecting = false;
-        this.statusText = '连接失败';
-        this.updateOutput();
-      };
-
-      this.ws.onclose = () => {
-        this.isConnected = false;
-        this.isConnecting = false;
-        this.statusText = '已断开';
-        this.buffer.addLine('连接已关闭');
-        this.updateOutput();
-      };
-
-    } catch (e) {
-      console.error('创建 WebSocket 失败:', e);
-      this.statusText = '连接失败';
-      this.isConnecting = false;
-    }
+    // Mock 模式：不建立真实 WebSocket，仅模拟连接成功
+    this.isConnected = true;
+    this.isConnecting = false;
+    this.statusText = '已连接（Mock）';
+    this.buffer.addLine(`已连接到 ${this.server.host}（Mock）`);
+    this.updateOutput();
   }
 
   disconnect() {
@@ -142,15 +90,8 @@ struct Terminal {
     this.commandHistory.push(cmd);
     this.historyIndex = this.commandHistory.length;
 
-    // 发送命令到后端
-    if (this.ws) {
-      // 发送命令（需要编码）
-      const cmdData = btoa(cmd + '\n');
-      this.ws.send(JSON.stringify({ 
-        type: 'data', 
-        data: cmdData 
-      }));
-    }
+    // Mock 模式：直接回显
+    this.buffer.addLine(`执行：${cmd}（Mock）`);
 
     this.inputCommand = '';
     this.updateOutput();

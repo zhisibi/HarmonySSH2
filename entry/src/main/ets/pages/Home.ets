@@ -1,5 +1,5 @@
 import router from '@ohos.router';
-import { ApiService, Server } from '../services/ApiService';
+import { MockApiService, Server } from '../services/MockApiService';
 import { FlexAlign, VerticalAlign, HorizontalAlign } from '@ohos.arkui.node';
 
 @Entry
@@ -15,7 +15,7 @@ struct Home {
 
   async loadServers() {
     this.isLoading = true;
-    this.servers = await ApiService.getServers();
+    this.servers = await MockApiService.getServers();
     this.isLoading = false;
   }
 
@@ -39,7 +39,7 @@ struct Home {
     if (!server.id) return;
     
     try {
-      const result = await ApiService.deleteServer(server.id);
+      const result = await MockApiService.deleteServer(server.id);
       if (result.success) {
         this.loadServers();
       } else {
@@ -51,7 +51,7 @@ struct Home {
   }
 
   async logout() {
-    await ApiService.logout();
+    await MockApiService.logout();
     router.replaceUrl({ url: 'pages/Login' });
   }
 
