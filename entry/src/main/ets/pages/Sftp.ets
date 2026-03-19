@@ -278,11 +278,7 @@ struct Sftp {
         .backgroundColor('#fff')
         .layoutWeight(1)
       }
-    }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#f5f7fb')
-
+    
     // 操作菜单
     if (this.showActions && this.selectedFile) {
       Column() {
@@ -340,11 +336,14 @@ struct Sftp {
         .border({ width: 1, color: '#e5e7eb', radius: 16 })
       }
       .width('100%')
-  .height('100%')
-  .backgroundColor('rgba(0,0,0,0.3)')
-  .position({ left: 0, top: 0 })
+      .height('100%')
+      .backgroundColor('rgba(0,0,0,0.3)')
+      .position({ left: 0, top: 0 })
     }
   }
+  .width('100%')
+  .height('100%')
+  .backgroundColor('#f5f7fb')
 
   downloadFile() {
     if (!this.server.id || !this.selectedFile) return;
