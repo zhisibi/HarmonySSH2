@@ -137,11 +137,6 @@ struct Settings {
         }
         .padding(20)
       }
-    }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#f5f7fb')
-
     // 消息提示
     if (this.showMessage) {
       Column() {
@@ -155,6 +150,11 @@ struct Settings {
       .backgroundColor('rgba(0,0,0,0.7)')
       .borderRadius(8)
     }
+    
+    // 页面根样式
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#f5f7fb')
   }
 
   @Builder
