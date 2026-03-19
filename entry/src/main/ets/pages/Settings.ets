@@ -257,14 +257,12 @@ struct Settings {
 }
 
 // 样式
-@Styles
 function pageStyle() {
   .width('100%')
   .height('100%')
   .backgroundColor('#f5f7fb')
 }
 
-@Styles
 function navStyle() {
   .width('100%')
   .height(60)
@@ -273,14 +271,12 @@ function navStyle() {
   .alignItems(VerticalAlign.Center)
 }
 
-@Styles
 function backBtnStyle() {
   .backgroundColor('transparent')
   .fontColor('#fff')
   .fontSize(16)
 }
 
-@Styles
 function menuItemStyle() {
   .width('100%')
   .padding(16)
@@ -288,14 +284,12 @@ function menuItemStyle() {
   .border({ width: 1, color: '#e5e7eb', radius: 12 })
 }
 
-@Styles
 function labelStyle() {
   .fontSize(14)
   .fontColor('#374151')
   .margin({ bottom: 6 })
 }
 
-@Styles
 function inputStyle() {
   .height(50)
   .backgroundColor('#fff')
@@ -304,7 +298,6 @@ function inputStyle() {
   .fontSize(16)
 }
 
-@Styles
 function saveBtnStyle() {
   .width('100%')
   .height(50)
@@ -313,7 +306,6 @@ function saveBtnStyle() {
   .fontColor('#fff')
 }
 
-@Styles
 function toastStyle() {
   .position({ x: 30, bottom: 100 })
   .padding(12)

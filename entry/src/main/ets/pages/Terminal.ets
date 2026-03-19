@@ -280,14 +280,12 @@ struct Terminal {
 }
 
 // 样式
-@Styles
 function pageStyle() {
   .width('100%')
   .height('100%')
   .backgroundColor('#0c0c0c')
 }
 
-@Styles
 function navStyle() {
   .width('100%')
   .height(60)
@@ -296,14 +294,12 @@ function navStyle() {
   .alignItems(VerticalAlign.Center)
 }
 
-@Styles
 function backBtnStyle() {
   .backgroundColor('transparent')
   .fontColor('#fff')
   .fontSize(16)
 }
 
-@Styles
 function actionBtnStyle(color: string) {
   .backgroundColor(color)
   .fontColor('#fff')
@@ -312,13 +308,11 @@ function actionBtnStyle(color: string) {
   .height(32)
 }
 
-@Styles
 function terminalOutputStyle() {
   .layoutWeight(1)
   .backgroundColor('#0c0c0c')
 }
 
-@Styles
 function inputStyle() {
   .height(44)
   .backgroundColor('#1a1a1a')
@@ -328,14 +322,12 @@ function inputStyle() {
   .fontColor('#33ff33')
 }
 
-@Styles
 function inputAreaStyle() {
   .width('100%')
   .padding(12)
   .backgroundColor('#111827')
 }
 
-@Styles
 function sendBtnStyle() {
   .backgroundColor('#10b981')
   .fontColor('#fff')
@@ -344,7 +336,6 @@ function sendBtnStyle() {
   .height(44)
 }
 
-@Styles
 function shortcutBarStyle() {
   .width('100%')
   .padding(8)
@@ -352,7 +343,6 @@ function shortcutBarStyle() {
   .justifyContent(FlexAlign.SpaceEvenly)
 }
 
-@Styles
 function shortcutBtnStyle() {
   .backgroundColor('#374151')
   .fontColor('#fff')

@@ -207,14 +207,12 @@ struct Home {
   }
 }
 
-@Styles
 function page() {
   .width('100%')
   .height('100%')
   .backgroundColor('#f5f7fb')
 }
 
-@Styles
 function header() {
   .width('100%')
   .height(60)
@@ -224,7 +222,6 @@ function header() {
   .alignItems(VerticalAlign.Center)
 }
 
-@Styles
 function headerBtn() {
   .backgroundColor('#374151')
   .fontColor('#fff')
@@ -233,7 +230,6 @@ function headerBtn() {
   .height(34)
 }
 
-@Styles
 function settingsMenu() {
   .position({ x: '55%', y: 70 })
   .width(150)
@@ -242,7 +238,6 @@ function settingsMenu() {
   .shadow({ radius: 10, color: 'rgba(0,0,0,0.15)', offsetX: 0, offsetY: 5 })
 }
 
-@Styles
 function menuItem() {
   .width('100%')
   .padding({ left: 14, right: 14, top: 10, bottom: 10 })
@@ -250,19 +245,16 @@ function menuItem() {
   .fontColor('#111827')
 }
 
-@Styles
 function content() {
   .layoutWeight(1)
   .padding(24)
 }
 
-@Styles
 function sectionHeader() {
   .width('100%')
   .margin({ bottom: 8 })
 }
 
-@Styles
 function addBtn() {
   .backgroundColor('#10b981')
   .fontColor('#fff')
@@ -271,7 +263,6 @@ function addBtn() {
   .height(36)
 }
 
-@Styles
 function card() {
   .width('100%')
   .backgroundColor('#fff')
@@ -280,7 +271,6 @@ function card() {
   .shadow({ radius: 18, color: 'rgba(0,0,0,0.04)', offsetX: 0, offsetY: 4 })
 }
 
-@Styles
 function cardBtn() {
   .fontColor('#fff')
   .fontSize(14)

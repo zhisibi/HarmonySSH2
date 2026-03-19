@@ -302,14 +302,12 @@ struct Sftp {
 }
 
 // 样式
-@Styles
 function pageStyle() {
   .width('100%')
   .height('100%')
   .backgroundColor('#f5f7fb')
 }
 
-@Styles
 function navStyle() {
   .width('100%')
   .height(60)
@@ -318,14 +316,12 @@ function navStyle() {
   .alignItems(VerticalAlign.Center)
 }
 
-@Styles
 function backBtnStyle() {
   .backgroundColor('transparent')
   .fontColor('#fff')
   .fontSize(16)
 }
 
-@Styles
 function actionBtnStyle(color: string) {
   .backgroundColor(color)
   .fontColor('#fff')
@@ -334,7 +330,6 @@ function actionBtnStyle(color: string) {
   .height(32)
 }
 
-@Styles
 function breadcrumbStyle() {
   .width('100%')
   .padding(12)
@@ -342,14 +337,12 @@ function breadcrumbStyle() {
   .border({ width: 1, color: '#e5e7eb' })
 }
 
-@Styles
 function toolbarStyle() {
   .width('100%')
   .padding(12)
   .backgroundColor('#fff')
 }
 
-@Styles
 function toolBtnStyle() {
   .backgroundColor('#e5e7eb')
   .fontColor('#374151')
@@ -358,20 +351,17 @@ function toolBtnStyle() {
   .height(32)
 }
 
-@Styles
 function listStyle() {
   .width('100%')
   .backgroundColor('#fff')
 }
 
-@Styles
 function fileItemStyle() {
   .width('100%')
   .padding(12)
   .border({ width: 1, color: '#f3f4f6', radius: 0 })
 }
 
-@Styles
 function coversStyle() {
   .width('100%')
   .height('100%')
@@ -379,7 +369,6 @@ function coversStyle() {
   .position({ left: 0, top: 0 })
 }
 
-@Styles
 function menuStyle() {
   .width('100%')
   .padding(20)
@@ -387,7 +376,6 @@ function menuStyle() {
   .border({ width: 1, color: '#e5e7eb', radius: 16 })
 }
 
-@Styles
 function menuBtnStyle(color?: string) {
   .width('100%')
   .height(44)

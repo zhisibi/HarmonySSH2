@@ -124,14 +124,12 @@ struct Login {
   }
 }
 
-@Styles
 function loginBg() {
   .width('100%')
   .height('100%')
   .backgroundColor('#667eea')
 }
 
-@Styles
 function loginCard() {
   .width(300)
   .padding(32)
@@ -140,7 +138,6 @@ function loginCard() {
   .shadow({ radius: 25, color: 'rgba(0,0,0,0.1)', offsetX: 0, offsetY: 10 })
 }
 
-@Styles
 function loginInput() {
   .height(48)
   .backgroundColor('#fff')
@@ -149,7 +146,6 @@ function loginInput() {
   .fontSize(14)
 }
 
-@Styles
 function loginBtn() {
   .width('100%')
   .height(48)

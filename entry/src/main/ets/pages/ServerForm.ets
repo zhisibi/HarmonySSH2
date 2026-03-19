@@ -187,14 +187,12 @@ struct ServerForm {
 }
 
 // 样式
-@Styles
 function pageStyle() {
   .width('100%')
   .height('100%')
   .backgroundColor('#f5f7fb')
 }
 
-@Styles
 function navStyle() {
   .width('100%')
   .height(60)
@@ -203,14 +201,12 @@ function navStyle() {
   .alignItems(VerticalAlign.Center)
 }
 
-@Styles
 function backBtnStyle() {
   .backgroundColor('transparent')
   .fontColor('#fff')
   .fontSize(16)
 }
 
-@Styles
 function formInput() {
   .height(50)
   .backgroundColor('#fff')
@@ -219,7 +215,6 @@ function formInput() {
   .fontSize(16)
 }
 
-@Styles
 function formTextArea() {
   .height(120)
   .backgroundColor('#fff')
@@ -228,7 +223,6 @@ function formTextArea() {
   .fontSize(14)
 }
 
-@Styles
 function saveBtnStyle() {
   .width('100%')
   .height(50)
