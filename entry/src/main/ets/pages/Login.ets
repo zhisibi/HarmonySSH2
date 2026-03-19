@@ -4,6 +4,7 @@ import { ApiService } from '../services/ApiService';
 @Entry
 @Component
 struct Login {
+  @State baseUrl: string = 'http://192.168.100.20:3000';
   @State username: string = '';
   @State password: string = '';
   @State errorMsg: string = '';
@@ -20,6 +21,9 @@ struct Login {
     this.isLoading = true;
     this.errorMsg = '';
 
+    // 设置后端地址
+    ApiService.setBaseUrl(this.baseUrl);
+    
     const result = await ApiService.login(this.username, this.password);
 
     this.isLoading = false;
@@ -41,6 +45,22 @@ struct Login {
           .fontWeight(FontWeight.Bold)
           .fontColor('#333')
           .margin({ bottom: 30 })
+
+        // 后端地址输入
+        Column({ space: 8 }) {
+          Text('后端地址')
+            .fontSize(14)
+            .fontColor('#555')
+            .fontWeight(FontWeight.Medium)
+          TextInput({ placeholder: '请输入后端地址', text: this.baseUrl })
+            .loginInput()
+            .onChange((value) => {
+              this.baseUrl = value;
+              this.errorMsg = '';
+            })
+        }
+        .alignItems(HorizontalAlign.Start)
+        .margin({ bottom: 20 })
 
         // 用户名输入
         Column({ space: 8 }) {

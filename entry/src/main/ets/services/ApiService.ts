@@ -1,8 +1,13 @@
 // API 服务 - 对接 WebSSH 后端
 
-// 后端地址配置
-const BASE_URL = 'http://192.168.100.20:3000';
-const WS_URL = 'ws://192.168.100.20:3000';
+// 存储
+const TOKEN_KEY = 'webssh_token';
+const BASE_URL_KEY = 'webssh_base_url';
+
+export class ApiService {
+  private static token: string = '';
+  private static baseUrl: string = 'http://192.168.100.20:3000';
+  private static wsUrl: string = 'ws://192.168.100.20:3000';
 
 // 存储
 const TOKEN_KEY = 'webssh_token';
@@ -25,6 +30,24 @@ export class ApiService {
     this.token = '';
   }
 
+  // 设置后端地址
+  static setBaseUrl(url: string): void {
+    this.baseUrl = url;
+    this.wsUrl = url.replace('http', 'ws');
+    // 保存到本地存储
+    // Preferences.set({ key: BASE_URL_KEY, value: url });
+  }
+
+  // 获取后端地址
+  static getBaseUrl(): string {
+    return this.baseUrl;
+  }
+
+  // 获取 WebSocket 地址
+  static getWsUrl(): string {
+    return this.wsUrl;
+  }
+
   // 通用请求头
   private static getHeaders(): Record<string, string> {
     const headers: Record<string, string> = {
@@ -39,7 +62,7 @@ export class ApiService {
   // 登录
   static async login(username: string, password: string): Promise<{ success: boolean; token?: string; message?: string }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/login`, {
+      const response = await fetch(`${this.baseUrl}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -58,7 +81,7 @@ export class ApiService {
   // 登出
   static async logout(): Promise<void> {
     try {
-      await fetch(`${BASE_URL}/api/logout`, {
+      await fetch(`${this.baseUrl}/api/logout`, {
         method: 'POST',
         headers: this.getHeaders()
       });
@@ -71,7 +94,7 @@ export class ApiService {
   // 获取服务器列表
   static async getServers(): Promise<Server[]> {
     try {
-      const response = await fetch(`${BASE_URL}/api/servers`, {
+      const response = await fetch(`${this.baseUrl}/api/servers`, {
         headers: this.getHeaders()
       });
       if (response.status === 401) {
@@ -88,7 +111,7 @@ export class ApiService {
   // 添加服务器
   static async addServer(server: Server): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/servers`, {
+      const response = await fetch(`${this.baseUrl}/api/servers`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(server)
@@ -103,7 +126,7 @@ export class ApiService {
   // 更新服务器
   static async updateServer(id: number, server: Server): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/servers/${id}`, {
+      const response = await fetch(`${this.baseUrl}/api/servers/${id}`, {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(server)
@@ -118,7 +141,7 @@ export class ApiService {
   // 删除服务器
   static async deleteServer(id: number): Promise<{ success: boolean; message?: string }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/servers/${id}`, {
+      const response = await fetch(`${this.baseUrl}/api/servers/${id}`, {
         method: 'DELETE',
         headers: this.getHeaders()
       });
@@ -132,7 +155,7 @@ export class ApiService {
   // SFTP: 列出目录
   static async sftpList(serverId: number, path: string): Promise<SftpFile[]> {
     try {
-      const response = await fetch(`${BASE_URL}/api/sftp/list?serverId=${serverId}&path=${encodeURIComponent(path)}`, {
+      const response = await fetch(`${this.baseUrl}/api/sftp/list?serverId=${serverId}&path=${encodeURIComponent(path)}`, {
         headers: this.getHeaders()
       });
       const result = await response.json();
@@ -145,13 +168,13 @@ export class ApiService {
 
   // SFTP: 下载文件
   static getSftpDownloadUrl(serverId: number, path: string): string {
-    return `${BASE_URL}/api/sftp/download?serverId=${serverId}&path=${encodeURIComponent(path)}`;
+    return `${this.baseUrl}/api/sftp/download?serverId=${serverId}&path=${encodeURIComponent(path)}`;
   }
 
   // SFTP: 新建文件夹
   static async sftpMkdir(serverId: number, path: string, dirname: string): Promise<{ success: boolean }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/sftp/mkdir`, {
+      const response = await fetch(`${this.baseUrl}/api/sftp/mkdir`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ serverId, path, dirname })
@@ -166,7 +189,7 @@ export class ApiService {
   // SFTP: 删除
   static async sftpDelete(serverId: number, targetPath: string, type: string): Promise<{ success: boolean }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/sftp/delete`, {
+      const response = await fetch(`${this.baseUrl}/api/sftp/delete`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ serverId, targetPath, type })
@@ -181,7 +204,7 @@ export class ApiService {
   // SFTP: 重命名
   static async sftpRename(serverId: number, oldPath: string, newPath: string): Promise<{ success: boolean }> {
     try {
-      const response = await fetch(`${BASE_URL}/api/sftp/rename`, {
+      const response = await fetch(`${this.baseUrl}/api/sftp/rename`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ serverId, oldPath, newPath })
@@ -196,18 +219,18 @@ export class ApiService {
   // 获取 WebSocket SSH URL
   static getWebSocketSshUrl(serverId: number): string {
     const token = this.getToken();
-    return `${WS_URL}/ws/ssh?serverId=${serverId}&token=${token}`;
+    return `${this.wsUrl}/ws/ssh?serverId=${serverId}&token=${token}`;
   }
 
   // 获取 WebSocket SFTP URL
   static getWebSocketSftpUrl(serverId: number): string {
     const token = this.getToken();
-    return `${WS_URL}/ws/sftp?serverId=${serverId}&token=${token}`;
+    return `${this.wsUrl}/ws/sftp?serverId=${serverId}&token=${token}`;
   }
 
   // 获取 SFTP WebSocket URL
   static getSftpWebSocketUrl(): string {
-    return `${WS_URL}/sftp`;
+    return `${this.wsUrl}/sftp`;
   }
 }
 
