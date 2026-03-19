@@ -280,8 +280,8 @@ struct Sftp {
       }
     }
     .width('100%')
-  .height('100%')
-  .backgroundColor('#f5f7fb')
+    .height('100%')
+    .backgroundColor('#f5f7fb')
 
     // 操作菜单
     if (this.showActions && this.selectedFile) {
